@@ -7,5 +7,11 @@
     <string name="hint_status">What\'s going on?</string>
     <string name="toast_tweet_failed">Failed to post to Yamba service.</string>
     <string name="toast_tweet_succeeded">Successfully posted.</string>
+    <string name="username_summary">Username</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="password_summary">Password</string>
+    <string name="api_root">API Root</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>
