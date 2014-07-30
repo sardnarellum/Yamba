@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Yamba</string>
+    <string name="action_settings">Beállítások</string>
+    <string name="hint_status">Mi történik most?</string>
+    <string name="toast_tweet_failed">Nem sikerült az üzenetet elküldeni.</string>
+    <string name="toast_tweet_succeeded">Sikeresen elküldve.</string>
+
+</resources>
