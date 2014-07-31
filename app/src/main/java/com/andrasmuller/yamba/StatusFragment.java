@@ -1,10 +1,14 @@
 package com.andrasmuller.yamba;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -78,9 +82,17 @@ public class StatusFragment extends Fragment implements OnClickListener {
 
         @Override
         protected String doInBackground(String... params) {
-            YambaClient yambaCloud = new YambaClient("student", "password");
-
             try {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                String username = prefs.getString("username", "");
+                String password = prefs.getString("password", "");
+
+                if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+                    getActivity().startActivity(new Intent(getActivity(), SettingsActivity.class));
+                    return getResources().getString(R.string.err_empty_credentials);
+                }
+
+                YambaClient yambaCloud = new YambaClient(username, password);
                 yambaCloud.postStatus(params[0]);
                 return getResources().getString(R.string.toast_tweet_succeeded);
             } catch (YambaClientException e) {

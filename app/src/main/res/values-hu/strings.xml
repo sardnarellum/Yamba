@@ -7,9 +7,13 @@
     <string name="toast_tweet_failed">Nem sikerült az üzenetet elküldeni.</string>
     <string name="toast_tweet_succeeded">Sikeresen elküldve.</string>
     <string name="username">Felhasználónév</string>
-    <string name="username_summary">Felhasználónév</string>
+    <string name="username_summary">Mi a felhasználóneved?</string>
     <string name="password">Jelszó</string>
-    <string name="password_summary">Jelszó</string>
+    <string name="password_summary">Itt adhatod meg a jelszavad.</string>
     <string name="api_root">API elérési út</string>
+    <string name="refresh">Frissítés</string>
+    <string name="purge">Törlés</string>
+    <string name="err_empty_credentials">Töltsd ki a bejelenetkezési adatokat!</string>
+    <string name="err_fetch_tweets">Nem sikerült Tweetek betöltése.</string>
 
 </resources>

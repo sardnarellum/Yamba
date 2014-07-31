@@ -1,9 +1,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:yamba="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.andrasmuller.yamba.MainActivity" >
     <item android:id="@+id/action_settings"
+        android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/action_settings"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        yamba:showAsAction="ifRoom" />
+    <item
+    android:id="@+id/action_tweet"
+    android:icon="@android:drawable/ic_menu_add"
+    yamba:showAsAction="always|withText"
+    android:title="@string/tweet"/>
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@android:drawable/ic_menu_rotate"
+        yamba:showAsAction="always"
+        android:title="@string/refresh"/>
+    <item
+        android:id="@+id/action_purge"
+        android:icon="@android:drawable/ic_menu_delete"
+        yamba:showAsAction="ifRoom"
+        android:title="@string/purge">
+    </item>
 </menu>
