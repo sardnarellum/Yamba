@@ -1,8 +1,10 @@
 package com.andrasmuller.yamba;
 
 import android.app.IntentService;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -43,19 +45,27 @@ public class RefreshService extends IntentService {
             return;
         }
         Log.d(TAG, "onStarted");
-        YambaClient cloud = new YambaClient(username, password); //
+
+        DbHelper dbHelper = new DbHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        YambaClient cloud = new YambaClient(username, password);
         try {
             List<Status> timeline = cloud.getTimeline(20); //
-            for (Status status : timeline) { //
-                Log.d(TAG,
-                        String.format("%s: %s", status.getUser(),
-                                status.getMessage())); //
+            for (Status status : timeline) {
+                values.clear();
+                values.put(StatusContract.Column.ID, status.getId());
+                values.put(StatusContract.Column.USER, status.getUser());
+                values.put(StatusContract.Column.MESSAGE, status.getMessage());
+                values.put(StatusContract.Column.CREATED_AT, status.getCreatedAt().getTime());
+
+                db.insertWithOnConflict(StatusContract.TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
             }
         } catch (YambaClientException e) { //
-            Log.e(TAG, "Failed to fetch the timeline", e);
+            Log.e(TAG, getResources().getString(R.string.err_fetch_tweets), e);
             e.printStackTrace();
         }
-        return;
     }
 
     @Override

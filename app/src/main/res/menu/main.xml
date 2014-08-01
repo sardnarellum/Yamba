@@ -10,7 +10,7 @@
     <item
     android:id="@+id/action_tweet"
     android:icon="@android:drawable/ic_menu_add"
-    yamba:showAsAction="always|withText"
+    yamba:showAsAction="always"
     android:title="@string/tweet"/>
     <item
         android:id="@+id/action_refresh"
