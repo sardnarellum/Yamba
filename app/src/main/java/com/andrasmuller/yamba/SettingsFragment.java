@@ -13,6 +13,7 @@ public class SettingsFragment extends PreferenceFragment implements
         OnSharedPreferenceChangeListener {
 
     private SharedPreferences prefs;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
