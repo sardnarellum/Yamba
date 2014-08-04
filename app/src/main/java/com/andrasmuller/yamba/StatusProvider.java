@@ -7,6 +7,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 
 /**
@@ -80,6 +81,34 @@ public class StatusProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return 0;
+        String where;
+
+        switch (sURImatcher.match(uri)) {
+            case StatusContract.STATUS_DIR:
+                where = s;
+                break;
+            case StatusContract.STATUS_ITEM:
+                long id = ContentUris.parseId(uri);
+                where = StatusContract.Column.ID
+                        + "="
+                        + id
+                        + (TextUtils.isEmpty(s) ? "" : " and ( "
+                            + s
+                            + ")"
+                );
+                break;
+            default:
+                throw new IllegalArgumentException("Illegal uri: " + uri);
+        }
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int ret = db.update(StatusContract.TABLE, contentValues, where, strings);
+
+        if (ret > 0)
+            getContext().getContentResolver().notifyChange(uri, null);
+
+        Log.d(TAG, "updated records: " + ret);
+
+        return ret;
     }
 }
