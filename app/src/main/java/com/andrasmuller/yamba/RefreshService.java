@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -46,8 +47,6 @@ public class RefreshService extends IntentService {
         }
         Log.d(TAG, "onStarted");
 
-        DbHelper dbHelper = new DbHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         YambaClient cloud = new YambaClient(username, password);
@@ -60,7 +59,9 @@ public class RefreshService extends IntentService {
                 values.put(StatusContract.Column.MESSAGE, status.getMessage());
                 values.put(StatusContract.Column.CREATED_AT, status.getCreatedAt().getTime());
 
-                db.insertWithOnConflict(StatusContract.TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+                Uri uri = getContentResolver().insert(StatusContract.CONTENT_URI, values);
+                if (null != uri)
+                    Log.d("%s: %s", String.format(status.getUser(), status.getMessage()));
             }
         } catch (YambaClientException e) { //
             Log.e(TAG, getResources().getString(R.string.err_fetch_tweets), e);

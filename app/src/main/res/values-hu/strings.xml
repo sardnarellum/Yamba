@@ -15,5 +15,6 @@
     <string name="purge">Törlés</string>
     <string name="err_empty_credentials">Töltsd ki a bejelenetkezési adatokat!</string>
     <string name="err_fetch_tweets">Nem sikerült Tweetek betöltése.</string>
+    <string name="toa_deleted">törölve.</string>
 
 </resources>

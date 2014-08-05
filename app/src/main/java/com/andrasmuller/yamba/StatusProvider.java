@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,7 +34,28 @@ public class StatusProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] strings, String s, String[] strings2, String s2) {
-        return null;
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        qb.setTables(StatusContract.TABLE);
+
+        switch (sURImatcher.match(uri)) {
+            case StatusContract.STATUS_DIR:
+                break;
+            case StatusContract.STATUS_ITEM:
+                qb.appendWhere(StatusContract.Column.ID + "=" + uri.getLastPathSegment());
+                break;
+            default:
+                throw new IllegalArgumentException("Illegal uri: " + uri);
+        }
+
+        String orderBy = TextUtils.isEmpty(s2) ? StatusContract.DEFAULT_SORT : s2;
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = qb.query(db, strings, s, strings2, null, null, orderBy);
+
+        cursor.setNotificationUri(getContext().getContentResolver(), null);
+
+        Log.d(TAG, "queried records: " + cursor.getCount());
+        return cursor;
     }
 
     @Override
@@ -76,7 +98,31 @@ public class StatusProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String s, String[] strings) {
-        return 0;
+        String where;
+
+        switch (sURImatcher.match(uri)) {
+            case StatusContract.STATUS_DIR:
+                where = s == null ? "1" : s;
+                break;
+            case StatusContract.STATUS_ITEM:
+                long id = ContentUris.parseId(uri);
+                where = StatusContract.Column.ID
+                        + "="
+                        + id
+                        + (TextUtils.isEmpty(s) ? "" : " and ( " + s + " )");
+                break;
+            default:
+                throw new IllegalArgumentException("Illegal uri: " + uri);
+        }
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int ret = db.delete(StatusContract.TABLE, where, strings);
+
+        if (ret > 0)
+            getContext().getContentResolver().notifyChange(uri, null);
+
+        Log.d(TAG, "deleted records: " + ret);
+        return ret;
     }
 
     @Override

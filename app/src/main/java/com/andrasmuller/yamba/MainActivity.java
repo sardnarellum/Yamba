@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.andrasmuller.yamba.R;
 
 public class MainActivity extends ActionBarActivity {
@@ -34,6 +36,11 @@ public class MainActivity extends ActionBarActivity {
                 return true;
             case R.id.action_refresh:
                 startService(new Intent(this, RefreshService.class));
+                return true;
+            case R.id.action_purge:
+                int rows = getContentResolver().delete(StatusContract.CONTENT_URI, null, null);
+                Toast.makeText(this, rows + getResources().getString(R.string.toa_deleted), Toast.LENGTH_LONG).show();
+                return true;
             default:
                 return false;
         }
