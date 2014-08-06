@@ -21,7 +21,7 @@ public class StatusContract {
     public static final String STATUS_TYPE_DIR =
             "vnd.android.cursor.dir/vnd.com.andrasmuller.yamba.provider.status";
 
-    public static final String DEFAULT_SORT = Column.CREATED_AT + "DESC";
+    public static final String DEFAULT_SORT = Column.CREATED_AT + " DESC";
 
     public class Column {
         public static final String ID = BaseColumns._ID;
