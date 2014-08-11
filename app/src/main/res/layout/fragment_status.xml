@@ -8,13 +8,15 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".StatusFragment">
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tweet"
+        android:src="@drawable/ic_action_send_now"
         android:id="@+id/buttonTweet"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:background="#00ffffff"
+        android:focusable="true" />
 
     <EditText
         android:layout_width="match_parent"
