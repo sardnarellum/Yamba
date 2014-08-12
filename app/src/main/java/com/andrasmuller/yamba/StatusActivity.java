@@ -1,6 +1,5 @@
 package com.andrasmuller.yamba;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,9 +13,7 @@ public class StatusActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActionBar actionBar = getActionBar();
-        if (null != actionBar)
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (null == savedInstanceState) {
             StatusFragment fragment = new StatusFragment();
