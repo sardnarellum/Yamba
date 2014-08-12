@@ -21,7 +21,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -41,8 +41,8 @@ public class MainActivity extends ActionBarActivity {
                                getContentResolver().delete(StatusContract.CONTENT_URI, null, null)
                                + getResources().getString(R.string.toa_deleted), Toast.LENGTH_LONG).show();
                 return true;
-            default:
-                return false;
         }
+
+        return super.onOptionsItemSelected(item);
     }
 }

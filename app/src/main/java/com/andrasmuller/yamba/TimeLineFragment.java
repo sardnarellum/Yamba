@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -35,11 +36,11 @@ public class TimeLineFragment extends ListFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.list_item, null, FROM, TO, 0);
+        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.list_item, null, FROM, TO, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         mAdapter.setViewBinder(new TimeLineViewBinder());
 
         setListAdapter(mAdapter);
-        getLoaderManager().initLoader(LOADER_ID, null, this);
+        getLoaderManager().initLoader(LOADER_ID, null, this); // TODO: fix runtime error
     }
 
     class TimeLineViewBinder implements SimpleCursorAdapter.ViewBinder {

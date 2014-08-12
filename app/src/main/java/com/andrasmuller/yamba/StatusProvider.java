@@ -21,8 +21,10 @@ public class StatusProvider extends ContentProvider {
     private static final UriMatcher sURImatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        sURImatcher.addURI(StatusContract.AUTHORITY, StatusContract.TABLE, StatusContract.STATUS_DIR);
-        sURImatcher.addURI(StatusContract.AUTHORITY, StatusContract.TABLE + "/#", StatusContract.STATUS_ITEM);
+        sURImatcher.addURI(StatusContract.AUTHORITY, StatusContract.TABLE,
+                           StatusContract.STATUS_DIR);
+        sURImatcher.addURI(StatusContract.AUTHORITY, StatusContract.TABLE + "/#",
+                           StatusContract.STATUS_ITEM);
     }
 
     @Override
